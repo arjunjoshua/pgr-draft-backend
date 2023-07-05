@@ -1,10 +1,10 @@
 const express = require('express');
 const trainerRoutes = require('./routes/trainerRoutes');
 
+const app = express();
+
 const cors = require('cors');
 app.use(cors());
-
-const app = express();
 
 app.use(express.json());
 app.use('/trainers', trainerRoutes);
