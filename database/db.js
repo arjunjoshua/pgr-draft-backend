@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://pgr-draftleader:NianticSux12@cluster0.s4iajwl.mongodb.net/pgr-draft?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+require('dotenv').config();
+const username = process.env.DB_USERNAME;
+const password = process.env.DB_PASSWORD;
+
+mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.s4iajwl.mongodb.net/pgr-draft?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const Schema = mongoose.Schema;
 
