@@ -2,6 +2,20 @@ const express = require('express');
 const router = express.Router();
 const { Trainer, Lobby, Team } = require('../database/db');
 
+router.get('/', async (req, res) => {
+  try {
+    const trainers = await Trainer.find().populate({
+      path: 'teams',
+      populate: {
+        path: 'pokemons',
+      },
+    });
+    res.status(200).json(trainers);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+});
+
 router.post('/', async (req, res) => {
   const { name, team, lobby } = req.body;
 
