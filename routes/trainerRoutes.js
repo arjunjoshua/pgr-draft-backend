@@ -1,21 +1,29 @@
 const express = require('express');
 const router = express.Router();
-const { Trainer, Lobby, Team } = require('../database/db');  
+const { Trainer, Lobby, Team } = require('../database/db');
 
 router.post('/', async (req, res) => {
-  const { name, team, lobby } = req.body;  // assuming that 'team' and 'lobby' fields are in the request body
+  const { name, team, lobby } = req.body;
 
-  // Create a new Lobby
-  const newLobby = new Lobby(lobby);
-  try {
-    await newLobby.save();
-  } catch (error) {
-    res.status(400).send(error);
-    return;
+  // Search for the existing Trainer
+  let existingTrainer = await Trainer.findOne({ name });
+
+  // Search for the existing Lobby
+  let existingLobby = await Lobby.findOne({ name: lobby.name });
+
+  if (!existingLobby) {
+    // Create a new Lobby
+    existingLobby = new Lobby({ name: lobby.name });
+    try {
+      await existingLobby.save();
+    } catch (error) {
+      res.status(400).send(error);
+      return;
+    }
   }
 
   // Create a new Team
-  const newTeam = new Team(team);
+  const newTeam = new Team({ pokemons: team.pokemons, lobby: existingLobby._id });
   try {
     await newTeam.save();
   } catch (error) {
@@ -23,11 +31,27 @@ router.post('/', async (req, res) => {
     return;
   }
 
-  // Create a new Trainer with references to the Lobby and Team
-  const newTrainer = new Trainer({ name, teams: [newTeam._id], lobbies: [newLobby._id] });
+  if (!existingTrainer) {
+    // Create a new Trainer with references to the Lobby and Team
+    existingTrainer = new Trainer({ name, teams: [newTeam._id], lobbies: [existingLobby._id] });
+  } else {
+    // Update the existing Trainer with new Team and Lobby
+    existingTrainer.teams.push(newTeam._id);
+    existingTrainer.lobbies.push(existingLobby._id);
+  }
+
   try {
-    await newTrainer.save();
-    res.status(201).send(newTrainer);
+    await existingTrainer.save();
+
+    // Update the new Team with the Trainer's ID
+    newTeam.trainer = existingTrainer._id;
+    await newTeam.save();
+
+    // Update the Lobby with the Trainer's ID
+    existingLobby.trainers.push(existingTrainer._id);
+    await existingLobby.save();
+
+    res.status(201).send(existingTrainer);
   } catch (error) {
     res.status(400).send(error);
   }

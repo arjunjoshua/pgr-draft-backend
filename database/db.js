@@ -10,15 +10,16 @@ const TrainerSchema = new Schema({
 });
 
 const LobbySchema = new Schema({
-  name: String,
-  trainers: [{ type: Schema.Types.ObjectId, ref: 'Trainer' }],
-});
-
-const TeamSchema = new Schema({
-  pokemons: [String],
-  trainer: { type: Schema.Types.ObjectId, ref: 'Trainer' },
-  lobby: { type: Schema.Types.ObjectId, ref: 'Lobby' },
-});
+    name: String,
+    trainers: [{ type: Schema.Types.ObjectId, ref: 'Trainer' }],  // Will add trainer later
+  });
+  
+  const TeamSchema = new Schema({
+    pokemons: [String],
+    trainer: { type: Schema.Types.ObjectId, ref: 'Trainer' },  // Will add trainer later
+    lobby: { type: Schema.Types.ObjectId, ref: 'Lobby' },  // Will add lobby later
+  });
+  
 
 const Trainer = mongoose.model('Trainer', TrainerSchema);
 const Lobby = mongoose.model('Lobby', LobbySchema);
