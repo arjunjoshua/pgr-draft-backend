@@ -16,6 +16,16 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/lobby/:lobbyId', async (req, res) => {
+  try {
+    const trainers = await Trainer.find({ 'teams.lobby': req.params.lobbyId }).populate('teams');
+    res.json(trainers);
+  } catch (err) {
+    res.json({ message: err });
+  }
+});
+
+
 router.post('/', async (req, res) => {
   const { name, team, lobby } = req.body;
 
