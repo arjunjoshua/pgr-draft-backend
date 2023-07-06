@@ -18,7 +18,15 @@ router.get('/', async (req, res) => {
 
 router.get('/lobby/:lobbyId', async (req, res) => {
   try {
-    const trainers = await Trainer.find({ 'teams.lobby': req.params.lobbyId }).populate('teams');
+    // First, find the teams that are associated with the given lobby.
+    const teams = await Team.find({ lobby: req.params.lobbyId });
+
+    // Extract the team ids into an array.
+    const teamIds = teams.map(team => team._id);
+
+    // Then, find the trainers that are associated with those teams.
+    const trainers = await Trainer.find({ 'teams': { $in: teamIds }}).populate('teams');
+    
     res.json(trainers);
   } catch (err) {
     res.json({ message: err });
