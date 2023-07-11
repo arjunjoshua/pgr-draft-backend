@@ -2,6 +2,43 @@ const express = require('express');
 const router = express.Router();
 const { Trainer, Lobby, Team } = require('../database/db');
 
+router.get('/', async (req, res) => {
+  try {
+    const trainers = await Trainer.find().populate({
+      path: 'teams',
+      populate: {
+        path: 'pokemons',
+      },
+    });
+    res.status(200).json(trainers);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+});
+
+router.get('/lobby/:lobbyId', async (req, res) => {
+  try {
+    const lobbyId = req.params.lobbyId;
+
+    //Get lobby data
+    const lobby = await Lobby.findById(lobbyId);
+
+    //Find the teams that are associated with the given lobby.
+    const teams = await Team.find({ lobby: req.params.lobbyId });
+
+    // Extract the team ids into an array.
+    const teamIds = teams.map(team => team._id);
+
+    // Then, find the trainers that are associated with those teams.
+    const trainers = await Trainer.find({ 'teams': { $in: teamIds }}).populate('teams');
+    
+    res.json({ lobby, trainers });
+  } catch (err) {
+    res.json({ message: err });
+  }
+});
+
+
 router.post('/', async (req, res) => {
   const { name, team, lobby } = req.body;
 
