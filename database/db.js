@@ -1,32 +1,17 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
-const username = process.env.DB_USERNAME;
-const password = process.env.DB_PASSWORD;
 
-mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.s4iajwl.mongodb.net/pgr-draft?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true });
+const connectDB = async () => {
+  if (mongoose.connections[0].readyState) return; // Use existing database connection if it exists
+  // Load your environment variables
+  const username = process.env.DB_USERNAME;
+  const password = process.env.DB_PASSWORD;
 
-const Schema = mongoose.Schema;
-
-const TrainerSchema = new Schema({
-  name: String,
-  teams: [{ type: Schema.Types.ObjectId, ref: 'Team' }],
-  lobbies: [{ type: Schema.Types.ObjectId, ref: 'Lobby' }],
-});
-
-const LobbySchema = new Schema({
-    name: String,
-    trainers: [{ type: Schema.Types.ObjectId, ref: 'Trainer' }],  // Will add trainer later
+  // Connect to your MongoDB database
+  await mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.s4iajwl.mongodb.net/pgr-draft?retryWrites=true&w=majority`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   });
-  
-  const TeamSchema = new Schema({
-    pokemons: [String],
-    trainer: { type: Schema.Types.ObjectId, ref: 'Trainer' },  // Will add trainer later
-    lobby: { type: Schema.Types.ObjectId, ref: 'Lobby' },  // Will add lobby later
-  });
-  
+};
 
-const Trainer = mongoose.model('Trainer', TrainerSchema);
-const Lobby = mongoose.model('Lobby', LobbySchema);
-const Team = mongoose.model('Team', TeamSchema);
-
-module.exports = { Trainer, Lobby, Team };
+module.exports = connectDB;
