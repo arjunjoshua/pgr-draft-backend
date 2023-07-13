@@ -2,7 +2,12 @@ const { Lobby } = require('../database/models');
 const connectDB = require('../database/db');
 
 module.exports = async (req, res) => {
-    await connectDB();
+  await connectDB();
+
+  // Manually set headers for CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     
   try {
     const lobbies = await Lobby.find().populate('trainers');
