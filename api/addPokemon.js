@@ -2,16 +2,16 @@ const connectDB = require('../database/db');
 const { Team } = require('../database/models');
 
 module.exports = async (req, res) => {
-     // Manually set headers for CORS
-     res.setHeader('Access-Control-Allow-Origin', '*');
-     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-     
-    if (req.method === 'OPTIONS') {
-        // Handle the preflight request. Respond successfully:
-        res.status(200).end();
-        return;
-    }   
+    //  // Manually set headers for CORS
+    //  res.setHeader('Access-Control-Allow-Origin', '*');
+    //  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    //  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    // if (req.method === 'OPTIONS') {
+    //     // Handle the preflight request. Respond successfully:
+    //     res.status(200).end();
+    //     return;
+    // }   
     
     const { trainerID, lobbyID, pokemonName} = req.body;
     const db = await connectDB();
