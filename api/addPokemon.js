@@ -14,13 +14,10 @@ module.exports = async (req, res) => {
         return;
     }   
     console.log(req.body);
-    const { trainerID, lobbyID, pokemonName} = req.body;
+    const { teamID, pokemonName } = req.body;
     await connectDB();
 
-    const team = await Team.findOne({ trainer: trainerID, lobby: lobbyID });
-    // if (team.pokemons.length >= 6) {
-    //     return res.status(400).json({ message: 'Team is full' });
-    // }
+    const team = await Team.findById(teamID);
     if (!team) {
         return res.status(400).json({ message: 'Team not found' });
     }
