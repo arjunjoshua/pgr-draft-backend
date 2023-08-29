@@ -20,6 +20,8 @@ module.exports = async (req, res) => {
     const convertedTrainerID = Mongoose.Types.ObjectId(trainerID);
     const convertedLobbyID = Mongoose.Types.ObjectId(lobbyID);
 
+    console.log(req.body, convertedLobbyID, convertedTrainerID);
+
     const team = await Team.findOne({ trainer: convertedTrainerID, lobby: convertedLobbyID });
     // if (team.pokemons.length >= 6) {
     //     return res.status(400).json({ message: 'Team is full' });
