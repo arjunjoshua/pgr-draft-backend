@@ -13,14 +13,12 @@ module.exports = async (req, res) => {
         res.status(200).end();
         return;
     }   
-    
+    console.log(req.body);
     const { trainerID, lobbyID, pokemonName} = req.body;
     await connectDB();
 
     const convertedTrainerID = Mongoose.Types.ObjectId(trainerID);
     const convertedLobbyID = Mongoose.Types.ObjectId(lobbyID);
-
-    console.log(req.body, convertedLobbyID, convertedTrainerID);
 
     const team = await Team.findOne({ trainer: convertedTrainerID, lobby: convertedLobbyID });
     // if (team.pokemons.length >= 6) {
