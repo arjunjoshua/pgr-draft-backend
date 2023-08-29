@@ -1,3 +1,4 @@
+const { Mongoose } = require('mongoose');
 const connectDB = require('../database/db');
 const { Team } = require('../database/models');
 
@@ -14,12 +15,18 @@ module.exports = async (req, res) => {
     }   
     
     const { trainerID, lobbyID, pokemonName} = req.body;
-    const db = await connectDB();
+    await connectDB();
 
-    const team = await Team.findOne({ trainer: trainerID, lobby: lobbyID });
+    const convertedTrainerID = Mongoose.Types.ObjectId(trainerID);
+    const convertedLobbyID = Mongoose.Types.ObjectId(lobbyID);
+
+    const team = await Team.findOne({ trainer: convertedTrainerID, lobby: convertedLobbyID });
     // if (team.pokemons.length >= 6) {
     //     return res.status(400).json({ message: 'Team is full' });
     // }
+    if (!team) {
+        return res.status(400).json({ message: 'Team not found' });
+    }
     team.pokemons.push(pokemonName);
     await team.save();
     return res.status(200).json({ message: 'Pokemon added to team' });
