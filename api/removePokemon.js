@@ -19,7 +19,10 @@ module.exports = async (req, res) => {
     if (!team) {
         return res.status(400).json({ message: 'Team not found' });
     }
-    team.pokemons.pop(pokemonName);
+    const index = team.pokemons.indexOf(pokemonName);
+    if (index > -1) {
+        team.pokemons.splice(index, 1);
+    }
     await team.save();
     return res.status(200).json({ message: 'Pokemon removed from team' });
 };
