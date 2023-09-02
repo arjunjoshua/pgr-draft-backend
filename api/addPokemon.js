@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
         res.status(200).end();
         return;
     }   
-    console.log(req.body);
+
     const { teamID, pokemonName } = req.body;
     await connectDB();
 
