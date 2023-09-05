@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
     const { teamID, pokemonName } = req.body;
     await connectDB();
 
-    const team = Team.findById(teamID);
+    const team = await Team.findById(teamID);
     if (!team) {
         return res.status(400).json({ message: 'Team not found' });
     }
