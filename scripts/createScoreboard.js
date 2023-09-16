@@ -1,0 +1,40 @@
+const { Trainer, Lobby, Match } = require('../database/models');
+const mongoose = require('mongoose');
+//require('dotenv').config();
+
+async function populateMatches() {
+    // const username = process.env.DB_USERNAME;
+    // const password = process.env.DB_PASSWORD;
+
+    
+    await mongoose.connect(`mongodb+srv://pgrnewuser:NianticSux12@cluster0.s4iajwl.mongodb.net/pgr-draft?retryWrites=true&w=majority`, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    });
+
+    const db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+
+    const lobbies = await Lobby.find();
+
+    for (let lobby of lobbies) {
+        const trainers = await Trainer.find({ lobbies: lobby._id });
+
+        for (let i=0; i < trainers.length; i++) {
+            for (let j=i+1; j < trainers.length; j++) {
+                const match_data = {
+                    lobby: lobby._id,
+                    trainer1: trainers[i]._id,
+                    trainer2: trainers[j]._id,
+                    winner: null,
+                };
+                await Match.create(match_data);
+            }
+        }
+    }
+
+    console.log("All matchups have been created.");
+    Mongoose.disconnect();
+}
+
+populateMatches();

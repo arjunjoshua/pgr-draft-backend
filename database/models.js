@@ -18,8 +18,16 @@ const TeamSchema = new Schema({
   lobby: { type: Schema.Types.ObjectId, ref: 'Lobby' },
 });
 
+const MatchSchema = new Schema({
+  lobby: { type: Schema.Types.ObjectId, ref: 'Lobby' },
+  trainer1: { type: Schema.Types.ObjectId, ref: 'Trainer' },
+  trainer2: { type: Schema.Types.ObjectId, ref: 'Trainer' },
+  winner: { type: Schema.Types.ObjectId, ref: 'Trainer' },
+});
+
 const Trainer = mongoose.model('Trainer', TrainerSchema);
 const Lobby = mongoose.model('Lobby', LobbySchema);
 const Team = mongoose.model('Team', TeamSchema);
+const Match = mongoose.model('Match', MatchSchema);
 
-module.exports = { Trainer, Lobby, Team };
+module.exports = { Trainer, Lobby, Team, Match };
