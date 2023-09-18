@@ -23,6 +23,7 @@ const MatchSchema = new Schema({
   trainer1: { type: Schema.Types.ObjectId, ref: 'Trainer' },
   trainer2: { type: Schema.Types.ObjectId, ref: 'Trainer' },
   winner: { type: Schema.Types.ObjectId, ref: 'Trainer' },
+  winnerName: String,
 });
 
 const Trainer = mongoose.model('Trainer', TrainerSchema);
