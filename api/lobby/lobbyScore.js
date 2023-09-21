@@ -7,8 +7,12 @@ module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
+    if(req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+
     await connectDB();
-    const {lobbyID} = req.body;
+    const lobbyID = req.query.lobbyID;
     const lobbyScores = await LobbyScore.find({lobby: lobbyID}).populate('trainer', 'name');
 
     if(!lobbyScores) {
