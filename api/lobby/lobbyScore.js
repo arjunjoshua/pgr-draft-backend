@@ -1,5 +1,6 @@
 const { Trainer, LobbyScore } = require('../../database/models');
 const connectDB  = require('../../database/db');
+const mongoose = require('mongoose');
 
 module.exports = async (req, res) => {
     // Manually set headers for CORS
@@ -10,10 +11,10 @@ module.exports = async (req, res) => {
     if(req.method === 'OPTIONS') {
         return res.status(200).end();
     }
-
+    
     await connectDB();
-    const lobbyID = req.query.lobbyID;
-    const lobbyScores = await LobbyScore.find({lobby: lobbyID}).populate('trainer', 'name');
+    const mLobbyID = mongoose.Types.ObjectId(req.query.lobbyID);
+    const lobbyScores = await LobbyScore.find({lobby: mLobbyID}).populate('trainer', 'name');
 
     if(!lobbyScores) {
         return res.status(400).json({message: 'Lobby not found'});
