@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
     }
     
     await connectDB();
-    const mLobbyID = mongoose.Types.ObjectId(req.query.lobbyID);
+    const mLobbyID = new mongoose.Types.ObjectId(req.query.lobbyID);
     const lobbyScores = await LobbyScore.find({lobby: mLobbyID}).populate('trainer', 'name');
 
     if(!lobbyScores) {
