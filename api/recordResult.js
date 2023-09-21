@@ -36,17 +36,17 @@ module.exports = async (req, res) => {
         return res.status(400).json({ message: 'Lobby score not found' });
     }
 
-    lobbyScore.matchesPlayed += 1;
+    lobbyScore1.matchesPlayed += 1;
     if (winner === trainer1ID) {
-        lobbyScore.matchesWon += 1;
-        lobbyScore.points += 2;
+        lobbyScore1.matchesWon += 1;
+        lobbyScore1.points += 2;
     } else if (winner === trainer2ID) {
-        lobbyScore.matchesLost += 1;
+        lobbyScore1.matchesLost += 1;
     } else {
-        lobbyScore.matchesTied += 1;
-        lobbyScore.points += 1;
+        lobbyScore1.matchesTied += 1;
+        lobbyScore1.points += 1;
     }
-    await lobbyScore.save();
+    await lobbyScore1.save();
 
 
     // Update trainer 2 score
@@ -56,17 +56,17 @@ module.exports = async (req, res) => {
         return res.status(400).json({ message: 'Lobby score not found' });
     }
 
-    lobbyScore.matchesPlayed += 1;
+    lobbyScore2.matchesPlayed += 1;
     if (winner === trainer2ID) {
-        lobbyScore.matchesWon += 1;
-        lobbyScore.points += 2;
+        lobbyScore2.matchesWon += 1;
+        lobbyScore2.points += 2;
     } else if (winner === trainer1ID) {
-        lobbyScore.matchesLost += 1;
+        lobbyScore2.matchesLost += 1;
     } else {
-        lobbyScore.matchesTied += 1;
-        lobbyScore.points += 1;
+        lobbyScore2.matchesTied += 1;
+        lobbyScore2.points += 1;
     }
-    await lobbyScore.save();
+    await lobbyScore2.save();
 
     return res.status(200).json({ message: 'Match result recorded' });
 };
