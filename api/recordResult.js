@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
     }
     else if(match.winnerName) {
         console.log("Match result has already been recorded");
-        return res.status(400).json({ message: 'Match result has already been recorded' });
+        return res.status(200).json({ message: 'Match result has already been recorded' });
     }
 
     match.winnerName = winnerName;
