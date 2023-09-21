@@ -22,11 +22,19 @@ module.exports = async (req, res) => {
         console.log("Match not found");
         return res.status(400).json({ message: 'Match not found' });
     }
-
-    if(!match.winnerName) {
-        match.winnerName = winnerName;
+    else if(match.winnerName) {
+        console.log("Match result has already been recorded");
+        return res.status(200).json({ message: 'Match result has already been recorded' });
     }
+
+    match.winnerName = winnerName;
+    
+    if(winner == 0) {
+        match.winner = null;
+    }
+    else{
     match.winner = winner;
+    }
     await match.save();
 
     // Update trainer 1 score
