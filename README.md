@@ -20,9 +20,8 @@ This API is designed to manage Pokémon lobbies, trainers, teams, and matches. I
 
 ## Installation
 
-\`\`\`bash
 # Clone the repository
-git clone <repository_url>
+git clone https://github.com/arjunjoshua/pgr-draft-backend
 
 # Navigate to the project directory
 cd <project_name>
