@@ -10,6 +10,7 @@ const TrainerSchema = new Schema({
 const LobbySchema = new Schema({
   name: String,
   trainers: [{ type: Schema.Types.ObjectId, ref: 'Trainer' }],
+  priority: Number, 
 });
 
 const TeamSchema = new Schema({
