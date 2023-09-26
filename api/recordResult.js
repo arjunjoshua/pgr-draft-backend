@@ -19,8 +19,8 @@ module.exports = async (req, res) => {
     // Update match
     const match = await Match.findOne({
         $or: [
-        { trainer1: trainer1ID, trainer2: trainer2ID },
-        { trainer1: trainer2ID, trainer2: trainer1ID }
+        { trainer1: trainer1ID, trainer2: trainer2ID, lobby: lobbyID },
+        { trainer1: trainer2ID, trainer2: trainer1ID, lobby: lobbyID }
         ]
     });
     if (!match) {
