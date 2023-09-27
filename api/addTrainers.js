@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
         bufferStream.end(req.file.buffer);
 
         bufferStream
-            .pipe(csv)
+            .pipe(csv())
             .on('data', (row) => {
                 results.push(row);
             })
