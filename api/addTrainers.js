@@ -1,22 +1,33 @@
 const connectDB = require('../database/db');
 const { Trainer, Lobby, Team } = require('../database/models');
-const fs = require('fs');
 const csv = require('csv-parser');
 const mongoose = require('mongoose');
+const multer = require('multer');
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage }).single('file');
 
 module.exports = async (req, res) => {
     await connectDB();
 
-    const results = [];
-    fs.createReadStream('../csvData/TrainerData')
-        .pipe(csv())
-        .on('data', (row) => {
-            results.push(row);
-        })
-        .on('end', async () => {
-            try {
-                for (const row of results) {
-                    const { trainer, lobby, pokemons } = row;
+    upload(req, res, async (err) => {
+        if (err) {
+            return res.status(400).send({ error: 'Error uploading file.' });
+        }
+
+        const results = [];
+        const bufferStream = new require('stream').PassThrough();
+        bufferStream.end(req.file.buffer);
+
+        bufferStream
+            .pipe(csv())
+            .on('data', (row) => {
+                results.push(row);
+            })
+            .on('end', async () => {
+                try {
+                    for (const row of results) {
+                        const { trainer, lobby, pokemons } = row;
 
                     let existingTrainer = await Trainer.findOne({ name: trainer });
                     let existingLobby = await Lobby.findOne({ name: lobby });
@@ -50,4 +61,5 @@ module.exports = async (req, res) => {
             mongoose.connection.close();
         }
     });
+})
 };
