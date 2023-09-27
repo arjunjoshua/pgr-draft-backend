@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
     await connectDB();
 
     const results = [];
-    fs.createReadStream('../csvData/TrainerData.csv')
+    fs.createReadStream('../csvData/TrainerData')
         .pipe(csv())
         .on('data', (row) => {
             results.push(row);
