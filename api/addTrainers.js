@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
         bufferStream.end(req.file.buffer);
 
         bufferStream
-            .pipe(csv({ delimiter: ',' }))
+            .pipe(csv)
             .on('data', (row) => {
                 results.push(row);
             })
@@ -37,7 +37,8 @@ module.exports = async (req, res) => {
                         await existingLobby.save();
                     }
 
-                    const newTeam = new Team({ pokemons: pokemons, lobby: existingLobby._id });
+                    const pokemonsArray = pokemons ? pokemons.split(',') : [];
+                    const newTeam = new Team({ pokemons: pokemonsArray, lobby: existingLobby._id });
                     await newTeam.save();
 
                     if (!existingTrainer) {
