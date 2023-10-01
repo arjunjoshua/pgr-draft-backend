@@ -8,7 +8,7 @@ const connectDB = async () => {
   const password = process.env.DB_PASSWORD;
 
   // Connect to your MongoDB database
-  await mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.s4iajwl.mongodb.net/pvp-draft-v21?retryWrites=true&w=majority`, {
+  await mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.s4iajwl.mongodb.net/pgr-draft?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
