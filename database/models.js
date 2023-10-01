@@ -25,11 +25,13 @@ const MatchSchema = new Schema({
   trainer2: { type: Schema.Types.ObjectId, ref: 'Trainer' },
   winner: { type: Schema.Types.ObjectId, ref: 'Trainer' },
   winnerName: String,
+  isReported: { type: Boolean, default: false}
 });
 
 const LobbyScoreSchema = new Schema({
   lobby: { type: Schema.Types.ObjectId, ref: 'Lobby' },
   trainer: { type: Schema.Types.ObjectId, ref: 'Trainer' },
+  trainerName: String,
   matchesPlayed: Number,
   matchesWon: Number,
   matchesLost: Number,
