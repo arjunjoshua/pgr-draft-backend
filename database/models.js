@@ -35,8 +35,8 @@ const LobbyScoreSchema = new Schema({
   matchesLost: Number,
   matchesTied: Number,
   points: Number,
-  wins: Number,
-  losses: Number,
+  wins: { type: Number, default: 0 },
+  losses: { type: Number, default: 0 },
 });
 
 const Trainer = mongoose.model('Trainer', TrainerSchema);
