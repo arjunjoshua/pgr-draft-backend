@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
         return;
     }
     
-    const { trainer1ID, trainer2ID, winner, winnerName, lobbyID, wins, losses } = req.body;
+    const { trainer1ID, trainer2ID, winner, winnerName, lobbyID, wins, losses, draws } = req.body;
     await connectDB();
 
     // Update match
@@ -49,12 +49,8 @@ module.exports = async (req, res) => {
         console.log("Lobby score 1 not found");
         return res.status(400).json({ message: 'Lobby score not found' });
     }
-    if (!lobbyScore1.wins) {
-        lobbyScore1.wins = 0;
-    }
-    if (!lobbyScore1.losses) {
-        lobbyScore1.losses = 0;
-    }
+    if (!lobbyScore1.draws)
+        lobbyScore1.draws = 0;
 
     lobbyScore1.matchesPlayed += 1;
     if (winner === trainer1ID) {
@@ -72,6 +68,7 @@ module.exports = async (req, res) => {
         lobbyScore1.wins += wins;
         lobbyScore1.losses += losses;
     }
+    lobbyScore1.draws += draws;
     await lobbyScore1.save();
 
 
@@ -82,13 +79,15 @@ module.exports = async (req, res) => {
         return res.status(400).json({ message: 'Lobby score not found' });
     }
 
-    if (!lobbyScore2.wins) {
-        lobbyScore2.wins = 0;
-    }
-    if (!lobbyScore2.losses) {
-        lobbyScore2.losses = 0;
-    }
+    // if (!lobbyScore2.wins) {
+    //     lobbyScore2.wins = 0;
+    // }
+    // if (!lobbyScore2.losses) {
+    //     lobbyScore2.losses = 0;
+    // }
 
+    if (!lobbyScore2.draws)
+        lobbyScore2.draws = 0;
 
     lobbyScore2.matchesPlayed += 1;
     if (winner === trainer2ID) {
@@ -106,6 +105,7 @@ module.exports = async (req, res) => {
         lobbyScore2.wins += wins;
         lobbyScore2.losses += losses;
     }
+    lobbyScore2.draws += draws;
     await lobbyScore2.save();
 
     return res.status(200).json({ message: 'Match result recorded' });
