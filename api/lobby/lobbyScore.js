@@ -11,7 +11,6 @@ module.exports = async (req, res) => {
     if(req.method === 'OPTIONS') {
         return res.status(200).end();
     }
-    
     await connectDB();
     const mLobbyID = new mongoose.Types.ObjectId(req.query.lobbyID);
     const lobbyScores = await LobbyScore.find({lobby: mLobbyID}).populate('trainer', 'name');
@@ -19,7 +18,7 @@ module.exports = async (req, res) => {
     if(!lobbyScores) {
         return res.status(400).json({message: 'Lobby not found'});
     }
-
+    
     res.status(200).json({lobbyScores});
 };
 
