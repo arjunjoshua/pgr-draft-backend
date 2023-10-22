@@ -18,15 +18,7 @@ module.exports = async (req, res) => {
     if(!lobbyScores) {
         return res.status(400).json({message: 'Lobby not found'});
     }
-
-   for (let score of LobbyScore)
-   {
-     if(!score.draws) {
-        score.draws = 0;
-        await score.save();
-    }
-   }
-
+    
     res.status(200).json({lobbyScores});
 };
 
