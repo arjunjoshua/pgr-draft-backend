@@ -36,24 +36,25 @@ module.exports = async (req, res) => {
                             const { trainer, lobby, pokemons } = row;
                             let existingTrainer = await Trainer.findOne({ name: trainer });
                             if (!existingTrainer) {
-                                returnMessage += `\n${trainer} not found. `;
+                                returnMessage += `, ${trainer} not found. `;
                                 continue;
                             }
                             let existingLobby = await Lobby.findOne({ name: lobby });
                             if (!existingLobby) {
-                                returnMessage += `\n${lobby} not found. `;
+                                returnMessage += `, ${lobby} not found. `;
                                 continue;
                             }
                             let existingTeam = await Team.findOne({ lobby: existingLobby._id, trainer: existingTrainer._id });
                             if (!existingTeam) {
-                                returnMessage += `\n${existingTrainer.name} in ${existingLobby.name} not found. `;
+                                returnMessage += `, ${existingTrainer.name} in ${existingLobby.name} not found. `;
                                 continue;
                             }
                             const pokemonsArray = pokemons ? pokemons.split(',') : [];
+                            console.log (pokemonsArray);
                             existingTeam.pokemons = pokemonsArray;
                             await existingTeam.save();
                         }
-                        returnMessage += '\nExcept the above, all teams updated successfully.';
+                        returnMessage += ', Except the above, all teams updated successfully.';
                         res.status(200).json({ message: returnMessage });
                     } catch (err) {
                         console.log(err);
