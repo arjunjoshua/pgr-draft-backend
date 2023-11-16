@@ -1,5 +1,6 @@
 const { Trainer, Team, Lobby, Match } = require('../../database/models');
 const  connectDB  = require('../../database/db');
+const mongoose = require('mongoose');
 
 module.exports = async (req, res) => {
     //manually set headers for CORS
@@ -12,9 +13,9 @@ module.exports = async (req, res) => {
     }
 
     await connectDB();
-    const trainer1ID = req.query.trainer1ID;
-    const trainer2ID = req.query.trainer2ID;
-    const lobbyID = req.query.lobbyID;
+    const trainer1ID = mongoose.Types.ObjectId(req.query.trainer1ID);
+    const trainer2ID = mongoose.Types.ObjectId(req.query.trainer2ID);
+    const lobbyID = mongoose.Types.ObjectId(req.query.lobbyID);
 
     const match = await Match.findOne({
         $or: [
