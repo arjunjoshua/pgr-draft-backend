@@ -16,7 +16,12 @@ module.exports = async (req, res) => {
     const trainer2ID = req.query.trainer2ID;
     const lobbyID = req.query.lobbyID;
 
-    const match = await Match.findOne({trainer1: trainer1ID, trainer2: trainer2ID, lobby: lobbyID});
+    const match = await Match.findOne({
+        $or: [
+            { trainer1: trainer1ID, trainer2: trainer2ID, lobby: lobbyID},
+            { trainer1: trainer2ID, trainer2: trainer1ID, lobby: lobbyID}
+        ]
+    })
     if(!match) {
         return res.status(400).json({message: 'Match not found'});
     }
