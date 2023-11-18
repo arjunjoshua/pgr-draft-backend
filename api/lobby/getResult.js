@@ -13,9 +13,9 @@ module.exports = async (req, res) => {
     }
 
     await connectDB();
-    const trainer1ID = mongoose.Types.ObjectId(req.query.trainer1ID);
-    const trainer2ID = mongoose.Types.ObjectId(req.query.trainer2ID);
-    const lobbyID = mongoose.Types.ObjectId(req.query.lobbyID);
+    const trainer1ID = new mongoose.Types.ObjectId(req.query.trainer1ID);
+    const trainer2ID = new mongoose.Types.ObjectId(req.query.trainer2ID);
+    const lobbyID = new mongoose.Types.ObjectId(req.query.lobbyID);
 
     const match = await Match.findOne({
         $or: [
