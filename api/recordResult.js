@@ -41,6 +41,9 @@ module.exports = async (req, res) => {
     match.winner = winner;
     }
     match.isReported = true;
+    match.wins = wins;
+    match.losses = losses;
+    match.draws = draws;
     await match.save();
 
     // Update trainer 1 score
