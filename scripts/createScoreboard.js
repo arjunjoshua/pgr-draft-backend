@@ -27,6 +27,11 @@ async function populateMatches() {
                     trainer1: trainers[i]._id,
                     trainer2: trainers[j]._id,
                     winner: null,
+                    winnerName: null,
+                    wins: 0,
+                    losses: 0,
+                    draws: 0,
+                    isReported: false
                 };
                 await Match.create(match_data);
             }
