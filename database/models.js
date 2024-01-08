@@ -25,6 +25,9 @@ const MatchSchema = new Schema({
   trainer2: { type: Schema.Types.ObjectId, ref: 'Trainer' },
   winner: { type: Schema.Types.ObjectId, ref: 'Trainer' },
   winnerName: String,
+  wins: Number,
+  losses: Number,
+  draws: Number,
   isReported: { type: Boolean, default: false}
 });
 
