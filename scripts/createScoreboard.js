@@ -7,7 +7,7 @@ async function populateMatches() {
     // const password = process.env.DB_PASSWORD;
 
     //this was a temp user on the DB. Will require a new user if the script has to be run again (likely next season)
-    await mongoose.connect(`mongodb+srv://pgrnewuser:NianticSux12@cluster0.s4iajwl.mongodb.net/pgr-draft?retryWrites=true&w=majority`, {
+    await mongoose.connect(`mongodb+srv://pgrv23:NianticSux12@cluster0.s4iajwl.mongodb.net/pvp-draft-v23?retryWrites=true&w=majority`, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
