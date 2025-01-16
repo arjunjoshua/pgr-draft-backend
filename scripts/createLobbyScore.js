@@ -2,13 +2,12 @@ const { Trainer, Lobby, LobbyScore } = require('../database/models');
 const mongoose = require('mongoose');
 
 async function populateTrainerScore() {
-    await mongoose.connect(`mongodb+srv://<username>:<password>@cluster0.s4iajwl.mongodb.net/pvp-draft-v23?retryWrites=true&w=majority`, {
+    await mongoose.connect(`mongodb+srv://pvp_v25:NianticSux12@cluster0.s4iajwl.mongodb.net/pvp-draft-v25?retryWrites=true&w=majority`, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
 
-    const db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'connection error:'));
+    mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 
     const lobbies = await Lobby.find();
 
@@ -28,7 +27,8 @@ async function populateTrainerScore() {
         }
     }
     console.log("New trainer scores have been created.");
-    mongoose.disconnect();
+    await mongoose.disconnect();
 }
 
-populateTrainerScore();
+populateTrainerScore()
+    .then(() => console.log("Script completed successfully."));
