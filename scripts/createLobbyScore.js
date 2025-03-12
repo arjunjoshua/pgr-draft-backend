@@ -1,8 +1,10 @@
 const { Trainer, Lobby, LobbyScore } = require('../database/models');
 const mongoose = require('mongoose');
 
-async function populateTrainerScore() {
-    await mongoose.connect(`mongodb+srv://pvp_v26:NianticSux12@cluster0.s4iajwl.mongodb.net/pvp-draft-v25?retryWrites=true&w=majority`, {
+const connection_url = "mongodb+srv://pvp_v26:NianticSux12@cluster0.s4iajwl.mongodb.net/pvp-draft-v26?retryWrites=true&w=majority"
+
+async function populateTrainerScore(url = connection_url) {
+    await mongoose.connect(url, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
@@ -32,3 +34,5 @@ async function populateTrainerScore() {
 
 populateTrainerScore()
     .then(() => console.log("Script completed successfully."));
+
+module.exports = populateTrainerScore;

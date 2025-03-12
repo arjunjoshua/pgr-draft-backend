@@ -1,13 +1,14 @@
 const { Trainer, Lobby, Match } = require('../database/models');
 const mongoose = require('mongoose');
-//require('dotenv').config();
 
-async function populateMatches() {
+const connection_url = "mongodb+srv://pvp_v26:NianticSux12@cluster0.s4iajwl.mongodb.net/pvp-draft-v26?retryWrites=true&w=majority"
+
+async function populateMatches(url = connection_url) {
     // const username = process.env.DB_USERNAME;
     // const password = process.env.DB_PASSWORD;
 
     //this was a temp user on the DB. Will require a new user if the script has to be run again (likely next season)
-    await mongoose.connect(`mongodb+srv://pvp_v26:NianticSux12@cluster0.s4iajwl.mongodb.net/pvp-draft-v25?retryWrites=true&w=majority`, {
+    await mongoose.connect(url, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
@@ -39,7 +40,9 @@ async function populateMatches() {
     }
 
     console.log("All matchups have been created.");
-    Mongoose.disconnect();
+    await mongoose.disconnect();
 }
 
-populateMatches();
+populateMatches().then(() => console.log("Script completed successfully."));
+
+module.exports = populateMatches;
