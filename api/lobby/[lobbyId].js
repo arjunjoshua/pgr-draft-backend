@@ -1,5 +1,5 @@
 const { Trainer, Lobby, Team } = require('../../database/models');
-const connectDB = require('../../database/db');
+const {connectDB} = require('../../database/db');
 
 module.exports = async (req, res) => {
     await connectDB();

@@ -1,5 +1,5 @@
 const { Match, LobbyScore } = require('../database/models.js');
-const connectDB = require('../database/db.js');
+const {connectDB} = require('../database/db.js');
 
 module.exports = async (req, res) => {
 

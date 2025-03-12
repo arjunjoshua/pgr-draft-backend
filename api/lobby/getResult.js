@@ -1,5 +1,5 @@
 const { Trainer, Team, Lobby, Match } = require('../../database/models');
-const  connectDB  = require('../../database/db');
+const  {connectDB}  = require('../../database/db');
 const mongoose = require('mongoose');
 
 module.exports = async (req, res) => {

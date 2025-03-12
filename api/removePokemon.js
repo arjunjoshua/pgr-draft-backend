@@ -1,5 +1,5 @@
 const { Mongoose } = require('mongoose');
-const connectDB = require('../database/db');
+const {connectDB} = require('../database/db');
 const { Team } = require('../database/models');
 
 module.exports = async (req, res) => {

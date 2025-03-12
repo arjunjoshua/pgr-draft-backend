@@ -1,4 +1,4 @@
-const connectDB = require('../database/db');
+const {connectDB} = require('../database/db');
 const { Trainer, Lobby, Team } = require('../database/models');
 const csv = require('csv-parser');
 const mongoose = require('mongoose');
