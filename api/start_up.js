@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
 
 
     // get the first lobby from the Lobbies collection
-    const lobby = await db.collection('Lobbies').findOne();
+    const lobby = await db.collection('lobbies').findOne();
 
     if (!lobby)
         return res.status(404).send({ error: 'No lobbies found in the database' });
