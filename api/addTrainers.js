@@ -4,6 +4,8 @@ const csv = require('csv-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
 
+const update_env_variable = require('../functions/update_env_variable');
+
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage }).single('file');
 
@@ -13,6 +15,10 @@ module.exports = async (req, res) => {
     if (!version || isNaN(Number(version))) {
         return res.status(400).send({ error: 'Version not specified' });
     }
+
+    // update the environment variable
+    update_env_variable(version);
+
     await connectDB(version);
 
     upload(req, res, async (err) => {
