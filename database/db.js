@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-const pvp_draft_version = 27;
+const pvp_draft_version = process.env.PVP_DRAFT_VERSION;
 
 const connection_url = (version = pvp_draft_version) => {
   const username = process.env.DB_USERNAME;

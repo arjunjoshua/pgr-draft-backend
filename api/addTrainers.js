@@ -8,7 +8,12 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage }).single('file');
 
 module.exports = async (req, res) => {
-    await connectDB();
+    // get version from the request
+    const version = req.query.version;
+    if (!version || isNaN(Number(version))) {
+        return res.status(400).send({ error: 'Version not specified' });
+    }
+    await connectDB(version);
 
     upload(req, res, async (err) => {
         if (err) {

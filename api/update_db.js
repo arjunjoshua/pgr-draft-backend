@@ -15,8 +15,10 @@ module.exports = async (req, res) => {
 
     // run the create lobby score and create scoreboards functions
 
-    await populateTrainerScore();
-    await populateMatches();
+    const connection_url_updated = connection_url(version);
+
+    await populateTrainerScore(connection_url_updated);
+    await populateMatches(connection_url_updated);
 
     // return a success message
     return res.send({ message: 'Database updated successfully' });
