@@ -19,9 +19,6 @@ module.exports = async (req, res) => {
     try {
         const lobbyId = lobby._id;
 
-        // Get lobby data
-        const lobby = await Lobby.findById(lobbyId);
-
         // Find the teams that are associated with the given lobby.
         const teams = await Team.find({ lobby: lobbyId });
 
