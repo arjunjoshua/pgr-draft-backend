@@ -11,10 +11,10 @@ module.exports = async (req, res) => {
 
 
     // get the first lobby from the Lobbies collection
-    const lobby = Lobby.findOne()
+    const lobby = await Lobby.findOne()
 
     if (!lobby)
-        return res.status(404).send({ error: 'No lobbies found in the database' });
+        return res.status(404).json({ error: 'No lobbies found in the database' });
 
     try {
         const lobbyId = lobby._id;
