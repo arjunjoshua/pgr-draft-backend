@@ -2,7 +2,7 @@ const {connectDB} = require('../database/db');
 const { Trainer, Lobby, Team } = require('../database/models');
 
 module.exports = async (req, res) => {
-    const db = connectDB();
+    await connectDB();
 
     // Manually set headers for CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
 
 
     // get the first lobby from the Lobbies collection
-    const lobby = await db.collection('lobbies').findOne();
+    const lobby = Lobby.findOne()
 
     if (!lobby)
         return res.status(404).send({ error: 'No lobbies found in the database' });
