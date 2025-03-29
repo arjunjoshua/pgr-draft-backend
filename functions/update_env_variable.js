@@ -1,5 +1,5 @@
 const update_env_variable = (version_number) => {
-    const url = `https://api.vercel.com/v10/projects${process.env.PROJECT_ID}/env/${process.env.VERSION_VARIABLE_ID}`;
+    const url = `https://api.vercel.com/v10/projects/${process.env.PROJECT_ID}/env/${process.env.VERSION_VARIABLE_ID}`;
 
     const body = {
         value: version_number
