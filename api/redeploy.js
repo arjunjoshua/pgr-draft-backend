@@ -5,8 +5,8 @@ module.exports = async () => {
     const restart_body = {
         name: 'production',
         gitSource: {
-            ref: process.env.GIT_COMMIT_REF || 'main',
-            repoId: process.env.GIT_REPO_ID || '662550813',
+            ref: 'main',
+            repoId: '662550813',
             type: 'github',
         }
     }
