@@ -5,8 +5,8 @@ module.exports = async () => {
     const restart_body = {
         name: 'production',
         gitSource: {
-            ref: process.env.GIT_COMMIT_REF,
-            repoId: process.env.GIT_REPO_ID,
+            ref: process.env.GIT_COMMIT_REF || 'main',
+            repoId: process.env.GIT_REPO_ID || '662550813',
             type: 'github',
         }
     }
@@ -23,6 +23,22 @@ module.exports = async () => {
     fetch(restart_url, restart_options)
         .then(response => response.json())
         .then(data => console.log(data))
-        .catch(err => console.error(err));
+        .catch((err) => {
+            return {
+                statusCode: 500,
+                body: JSON.stringify({
+                    message: 'Error restarting server',
+                    error: err.message
+                })
+            }
+        });
+
+    // return response
+    return {
+        statusCode: 200,
+        body: JSON.stringify({
+            message: 'Server restarted successfully'
+        })
+    }
 
 }
