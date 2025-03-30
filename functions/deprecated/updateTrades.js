@@ -1,5 +1,5 @@
-const {connectDB} = require('../database/db');
-const { Trainer, Lobby, Team } = require('../database/models');
+const {connectDB} = require('../../database/db');
+const { Trainer, Lobby, Team } = require('../../database/models');
 const csv = require('csv-parser');
 const multer = require('multer');
 
